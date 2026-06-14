@@ -1,0 +1,16 @@
+[Unit]
+Description=Radio Kiosk Display (Chromium Kiosk Mode)
+After=graphical.target radio-kiosk.service
+Wants=radio-kiosk.service
+
+[Service]
+User=KIOSK_USER
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/KIOSK_USER/.Xauthority
+ExecStartPre=/bin/sleep 8
+ExecStart=/opt/radio-kiosk/scripts/kiosk-launcher.sh
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=graphical.target
