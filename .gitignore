@@ -1,0 +1,15 @@
+# Local config (don't commit — keep your config.json private)
+config/config.json
+
+# Installer state files
+.install_args
+.remote_config_url
+.prev_sha
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs
+*.log
