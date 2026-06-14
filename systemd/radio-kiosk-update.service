@@ -1,0 +1,11 @@
+[Unit]
+Description=Radio Kiosk Auto-Update
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/radio-kiosk/scripts/update.sh
+WorkingDirectory=/opt/radio-kiosk
+StandardOutput=journal
+StandardError=journal
