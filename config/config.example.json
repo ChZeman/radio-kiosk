@@ -1,0 +1,51 @@
+{
+  "_comment": "Radio Kiosk configuration. Host this file at a public URL and pass --config-url to install.sh.",
+
+  "station": {
+    "name": "WLCB 97.7 FM",
+    "tagline": "Community Radio for the Lakes",
+    "logo_url": "https://yourstation.com/logo.png",
+    "website_url": "https://yourstation.com",
+    "qr_target": "https://yourstation.com",
+    "accent_color": "#3b82f6"
+  },
+
+  "nowplaying": {
+    "enabled": true,
+    "url": "https://yourstation.com/nowplaying.json",
+    "format": "json",
+    "poll_interval_seconds": 10,
+    "request_headers": {},
+    "field_artist": "artist",
+    "field_title": "title",
+    "field_is_commercial": "is_commercial",
+    "field_type": "type",
+    "commercial_type_value": "commercial",
+    "commercial_title_regex": "^(BREAK|COMMERCIAL|SPOT|PSA|PROMO)",
+    "field_sponsor_image_url": "sponsor_image_url",
+    "field_sponsor_name": "sponsor_name",
+    "field_sponsor_screen_url": "sponsor_screen_url",
+    "commercial_screen_url": ""
+  },
+
+  "display": {
+    "rotation": 0,
+    "theme": "dark",
+    "show_clock": true,
+    "show_qr_code": true,
+    "ui_poll_interval_seconds": 5
+  },
+
+  "cloudflare": {
+    "enabled": false,
+    "tunnel_token": "",
+    "vnc_enabled": true,
+    "vnc_password": "kiosk1234"
+  },
+
+  "update": {
+    "auto_update_enabled": true,
+    "update_interval_hours": 6,
+    "git_branch": "main"
+  }
+}
