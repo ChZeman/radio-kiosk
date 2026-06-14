@@ -89,10 +89,6 @@
       makeQR(qrEl, st.qr_target, sz);
       qrBuilt = true;
     }
-
-    // Sponsor screen station watermark
-    var sdName = qs('#sd-station-name');
-    if (sdName) sdName.textContent = st.name || '';
   }
 
   // ── Apply now-playing state to DOM ────────────────────────────────────
@@ -115,40 +111,32 @@
     }
 
     // Route to correct screen
-    if (s.is_commercial) {
-      renderSponsor(s);
-      showScreen('sponsor-screen');
+    if (s.slide_url) {
+      renderSlide(s.slide_url);
+      showScreen('slide-screen');
     } else {
       showScreen('main-screen');
     }
   }
 
-  function renderSponsor(s) {
-    var img   = qs('#sponsor-img');
-    var frame = qs('#sponsor-iframe');
-    var def   = qs('#sponsor-default');
-    var snEl  = qs('#sponsor-name-display');
+  // ── Render slide (image or iframe, detected by URL extension) ─────────
+  function renderSlide(url) {
+    var img   = qs('#slide-img');
+    var frame = qs('#slide-iframe');
+    var isImage = /\.(jpe?g|png|gif|webp|svg)(\?|$)/i.test(url);
 
-    // Priority: iframe URL > image URL > default break screen
-    if (s.sponsor_screen_url) {
-      img.classList.add('hidden');
-      def.style.display = 'none';
-      frame.classList.remove('hidden');
-      if (frame.getAttribute('src') !== s.sponsor_screen_url)
-        frame.setAttribute('src', s.sponsor_screen_url);
-
-    } else if (s.sponsor_image_url) {
-      frame.classList.add('hidden');
-      def.style.display = 'none';
-      img.classList.remove('hidden');
-      if (img.getAttribute('src') !== s.sponsor_image_url)
-        img.setAttribute('src', s.sponsor_image_url);
-
+    if (isImage) {
+      if (frame) frame.classList.add('hidden');
+      if (img) {
+        img.classList.remove('hidden');
+        if (img.getAttribute('src') !== url) img.setAttribute('src', url);
+      }
     } else {
-      img.classList.add('hidden');
-      frame.classList.add('hidden');
-      def.style.display = '';
-      if (snEl) snEl.textContent = s.sponsor_name || '';
+      if (img) img.classList.add('hidden');
+      if (frame) {
+        frame.classList.remove('hidden');
+        if (frame.getAttribute('src') !== url) frame.setAttribute('src', url);
+      }
     }
   }
 
