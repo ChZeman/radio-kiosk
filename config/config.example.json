@@ -2,7 +2,7 @@
   "_comment": "Radio Kiosk configuration. Host this file at a public URL and pass --config-url to install.sh.",
 
   "station": {
-    "name": "WLCB 97.7 FM",
+    "name": "WLCB 101.5 FM",
     "tagline": "Community Radio for the Lakes",
     "logo_url": "https://yourstation.com/logo.png",
     "website_url": "https://yourstation.com",
