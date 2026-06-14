@@ -5,7 +5,7 @@ A self-contained, auto-updating kiosk display system for radio stations. Deploy 
 ## Features
 
 - **Now Playing** — polls any URL for current song info (JSON or plain text)
-- **Sponsor screens** — displays full-screen sponsor content during commercial breaks
+- **Slides** — show a full-screen image or web page triggered by specific artist/title values in the now-playing feed
 - **QR code** — always-visible link to your station website
 - **Auto-update** — pulls from GitHub on a schedule; rolls back automatically if something breaks
 - **Remote access** — optional Cloudflare tunnel for SSH and VNC
@@ -135,11 +135,11 @@ After install the config lives at `/opt/radio-kiosk/config/config.json`. See `co
     "url": "https://lakesradio.org/nowplaying.json",
     "format": "json",
     "field_artist": "artist",
-    "field_title": "title",
-    "field_is_commercial": "is_commercial",
-    "field_sponsor_image_url": "sponsor_image",
-    "commercial_screen_url": "https://lakesradio.org/sponsor-screen.html"
-  }
+    "field_title": "title"
+  },
+  "slides": [
+    { "artist": "BREAK", "url": "https://lakesradio.org/slides/sponsor.jpg" }
+  ]
 }
 ```
 
@@ -155,14 +155,30 @@ Field paths support dot notation for nested objects (`now_playing.artist`, etc.)
 
 ### Text
 
-Two lines: artist on line 1, title on line 2. Put `BREAK` on line 1 to trigger commercial mode.
+Two lines: artist on line 1, title on line 2. Use your `slides` rules to act on specific values (e.g. `{ "artist": "BREAK", "url": "..." }`).
 
-### Commercial detection
+### Slides
 
-The kiosk enters commercial mode when **any** of these match:
-- `field_is_commercial` is `true`
-- `field_type` value equals `commercial_type_value`
-- Title or artist matches `commercial_title_regex` (default: `BREAK|COMMERCIAL|SPOT|PSA`)
+Add a `slides` array to your config to show a full-screen image or web page when a specific artist/title is playing. The first matching rule wins.
+
+```json
+"slides": [
+  { "artist": "BREAK", "url": "https://yourstation.com/slides/sponsor.jpg" },
+  { "artist": "BREAK", "title": "Underwriting", "url": "https://yourstation.com/slides/underwriting.html" },
+  { "artist_regex": "^(PROMO|PSA|SPOT)", "url": "https://yourstation.com/slides/promo.jpg" }
+]
+```
+
+**Match fields** (all specified fields must match; case-insensitive):
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `artist` | string | Exact match on artist |
+| `title` | string | Exact match on title |
+| `artist_regex` | string | Regex match on artist |
+| `title_regex` | string | Regex match on title |
+
+**Slide URL:** if the URL ends in an image extension (`.jpg`, `.png`, `.gif`, `.webp`, `.svg`) it renders as a full-screen image; otherwise it loads in a full-screen iframe.
 
 ## Remote Access
 
