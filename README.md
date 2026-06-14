@@ -112,9 +112,9 @@ After install the config lives at `/opt/radio-kiosk/config/config.json`. See `co
 ```json
 {
   "station": {
-    "name": "WLCB 97.7 FM",
-    "website_url": "https://wlcb.org",
-    "qr_target": "https://wlcb.org"
+    "name": "WLCB 101.5 FM",
+    "website_url": "https://lakesradio.org",
+    "qr_target": "https://lakesradio.org"
   }
 }
 ```
@@ -124,21 +124,21 @@ After install the config lives at `/opt/radio-kiosk/config/config.json`. See `co
 ```json
 {
   "station": {
-    "name": "WLCB 97.7 FM",
-    "logo_url": "https://wlcb.org/logo.png",
-    "website_url": "https://wlcb.org",
-    "qr_target": "https://wlcb.org",
+    "name": "WLCB 101.5 FM",
+    "logo_url": "https://lakesradio.org/logo.png",
+    "website_url": "https://lakesradio.org",
+    "qr_target": "https://lakesradio.org",
     "tagline": "Community Radio for the Lakes"
   },
   "nowplaying": {
     "enabled": true,
-    "url": "https://wlcb.org/nowplaying.json",
+    "url": "https://lakesradio.org/nowplaying.json",
     "format": "json",
     "field_artist": "artist",
     "field_title": "title",
     "field_is_commercial": "is_commercial",
     "field_sponsor_image_url": "sponsor_image",
-    "commercial_screen_url": "https://wlcb.org/sponsor-screen.html"
+    "commercial_screen_url": "https://lakesradio.org/sponsor-screen.html"
   }
 }
 ```
