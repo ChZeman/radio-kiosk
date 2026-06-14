@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Radio Kiosk</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ── Main screen ──────────────────────────────────────────────────── -->
+  <div id="main-screen" class="screen active">
+    <div class="header">
+      <div class="brand">
+        <img id="logo-img" src="" alt="" class="logo-img hidden">
+        <div id="logo-text" class="logo-text"></div>
+        <div id="tagline" class="tagline"></div>
+      </div>
+      <div id="clock" class="clock"></div>
+    </div>
+
+    <div class="content">
+      <div id="nowplaying-section" class="nowplaying-section hidden">
+        <div class="np-label">NOW PLAYING</div>
+        <div id="np-title"  class="np-title">—</div>
+        <div id="np-artist" class="np-artist"></div>
+      </div>
+      <div id="idle-section" class="idle-section">
+        <div class="audio-wave">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="idle-text">Tune in now</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div id="qr-section" class="qr-section">
+        <div id="qr-code"></div>
+        <div class="qr-label">Scan to visit</div>
+      </div>
+      <div class="station-url-wrap">
+        <svg class="url-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="2" y1="12" x2="22" y2="12"/>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+        <div id="station-url" class="station-url"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Sponsor / commercial screen ─────────────────────────────────── -->
+  <div id="sponsor-screen" class="screen">
+    <img id="sponsor-img" src="" alt="" class="sponsor-fullscreen hidden">
+    <iframe id="sponsor-iframe" src="" class="sponsor-fullscreen hidden"
+            frameborder="0" allow="autoplay"
+            sandbox="allow-same-origin allow-scripts allow-forms allow-popups"></iframe>
+    <div id="sponsor-default" class="sponsor-default">
+      <div class="sponsor-default-inner">
+        <div class="audio-wave break-wave">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div id="sponsor-name-display" class="sponsor-name-display"></div>
+        <div class="break-message">We'll be right back</div>
+        <div class="break-sub">after these messages</div>
+      </div>
+      <div id="sd-station-name" class="sd-station-name"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* Inline QR via Google Chart API — no external JS dependency */
+function makeQR(el, url, size) {
+  if (!url || !el) return;
+  var img = document.createElement('img');
+  img.src = 'https://chart.googleapis.com/chart?cht=qr&chs=' + size + 'x' + size +
+            '&chl=' + encodeURIComponent(url) + '&choe=UTF-8&chld=M|1';
+  img.alt = 'QR Code';
+  img.style.cssText = 'width:' + size + 'px;height:' + size + 'px;border-radius:10px;border:3px solid white;background:white;display:block;';
+  img.onerror = function() { el.innerHTML = ''; };
+  el.innerHTML = '';
+  el.appendChild(img);
+}
+</script>
+<script src="/static/app.js"></script>
+</body>
+</html>
