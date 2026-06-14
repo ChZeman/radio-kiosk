@@ -1,0 +1,287 @@
+:root {
+  --bg:       #070b14;
+  --surface:  rgba(255,255,255,0.04);
+  --border:   rgba(255,255,255,0.09);
+  --text:     #f1f5f9;
+  --text2:    #94a3b8;
+  --accent:   #3b82f6;
+  --accent2:  #8b5cf6;
+  --radius:   16px;
+  --fade:     0.85s cubic-bezier(0.4,0,0.2,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #app {
+  width: 100vw; height: 100vh; overflow: hidden;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Screens ──────────────────────────────────────────────────────────── */
+.screen {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  opacity: 0; pointer-events: none;
+  transition: opacity var(--fade);
+}
+.screen.active { opacity: 1; pointer-events: auto; }
+
+/* ── Main screen layout ───────────────────────────────────────────────── */
+#main-screen {
+  background:
+    radial-gradient(ellipse at 15% 50%, rgba(59,130,246,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse at 85% 15%, rgba(139,92,246,0.06) 0%, transparent 55%),
+    var(--bg);
+  padding: clamp(16px, 2.5vw, 40px);
+  gap: clamp(12px, 1.5vw, 24px);
+}
+
+/* Header */
+.header {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
+  padding-bottom: clamp(12px, 1.5vw, 24px);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand { display: flex; align-items: center; gap: clamp(10px, 1.4vw, 22px); }
+
+.logo-img {
+  height: clamp(36px, 6.5vw, 88px);
+  max-width: clamp(100px, 18vw, 260px);
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.logo-text {
+  font-size: clamp(1.3rem, 3.2vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.tagline {
+  font-size: clamp(0.65rem, 1.2vw, 1.05rem);
+  color: var(--text2);
+  font-weight: 400;
+  padding-left: clamp(6px, 0.8vw, 14px);
+  border-left: 2px solid var(--accent);
+  line-height: 1.2;
+}
+
+.clock {
+  font-size: clamp(1.8rem, 4.2vw, 4.5rem);
+  font-weight: 200;
+  letter-spacing: 0.03em;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* Content */
+.content {
+  flex: 1;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+
+.nowplaying-section { text-align: center; animation: fadeUp 0.5s ease; }
+
+.np-label {
+  font-size: clamp(0.55rem, 1.1vw, 0.95rem);
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  color: var(--accent);
+  margin-bottom: clamp(8px, 1.2vw, 20px);
+}
+
+.np-title {
+  font-size: clamp(1.8rem, 5.5vw, 6rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: clamp(6px, 0.8vw, 14px);
+  max-width: 90vw;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.np-artist {
+  font-size: clamp(1rem, 2.6vw, 2.8rem);
+  font-weight: 300;
+  color: var(--text2);
+}
+
+/* Idle state */
+.idle-section { text-align: center; }
+.idle-text {
+  font-size: clamp(0.9rem, 1.8vw, 1.7rem);
+  color: var(--text2);
+  margin-top: clamp(12px, 1.5vw, 24px);
+  letter-spacing: 0.12em;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+/* Audio wave animation (idle + break screens) */
+.audio-wave {
+  display: flex; align-items: flex-end; justify-content: center;
+  gap: clamp(4px, 0.6vw, 10px);
+  height: clamp(28px, 5vw, 64px);
+}
+.audio-wave span {
+  display: block;
+  width: clamp(4px, 0.7vw, 10px);
+  border-radius: 99px;
+  background: linear-gradient(to top, var(--accent), var(--accent2));
+  animation: wave 1.3s ease-in-out infinite;
+}
+.audio-wave span:nth-child(1) { animation-delay: 0.00s; height: 30%; }
+.audio-wave span:nth-child(2) { animation-delay: 0.12s; height: 55%; }
+.audio-wave span:nth-child(3) { animation-delay: 0.24s; height: 85%; }
+.audio-wave span:nth-child(4) { animation-delay: 0.12s; height: 55%; }
+.audio-wave span:nth-child(5) { animation-delay: 0.00s; height: 30%; }
+@keyframes wave {
+  0%, 100% { transform: scaleY(0.55); opacity: 0.55; }
+  50%       { transform: scaleY(1.00); opacity: 1.00; }
+}
+
+/* Footer */
+.footer {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
+  padding-top: clamp(12px, 1.5vw, 24px);
+  border-top: 1px solid var(--border);
+  gap: clamp(12px, 2vw, 32px);
+}
+
+.qr-section {
+  display: flex; flex-direction: column; align-items: center;
+  gap: clamp(4px, 0.5vw, 8px);
+  flex-shrink: 0;
+}
+.qr-label {
+  font-size: clamp(0.5rem, 0.85vw, 0.8rem);
+  color: var(--text2);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.station-url-wrap {
+  display: flex; align-items: center; gap: clamp(8px, 0.8vw, 14px);
+  flex: 1; justify-content: center; min-width: 0;
+}
+.url-icon {
+  width: clamp(18px, 2vw, 32px);
+  height: clamp(18px, 2vw, 32px);
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.station-url {
+  font-size: clamp(0.95rem, 2.2vw, 2.4rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Sponsor / commercial screen ─────────────────────────────────────── */
+#sponsor-screen { background: #0a0a0a; }
+
+.sponsor-fullscreen {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: contain;
+  background: #fff;
+  border: none;
+}
+
+.sponsor-default {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+  color: white;
+}
+
+.sponsor-default-inner { text-align: center; }
+
+.break-wave { margin-bottom: clamp(16px, 2vw, 32px); }
+.break-wave span {
+  background: linear-gradient(to top, #6366f1, #a78bfa);
+}
+
+.sponsor-name-display {
+  font-size: clamp(1.8rem, 5vw, 5.5rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  margin-bottom: clamp(10px, 1.5vw, 24px);
+  background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.break-message {
+  font-size: clamp(1.1rem, 2.8vw, 3rem);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  margin-top: clamp(8px, 1vw, 16px);
+}
+.break-sub {
+  font-size: clamp(0.75rem, 1.4vw, 1.4rem);
+  color: rgba(255,255,255,0.45);
+  margin-top: clamp(4px, 0.5vw, 8px);
+  font-style: italic;
+}
+
+.sd-station-name {
+  position: absolute;
+  bottom: clamp(12px, 2vw, 28px);
+  right: clamp(16px, 2.5vw, 36px);
+  font-size: clamp(0.7rem, 1.2vw, 1.1rem);
+  color: rgba(255,255,255,0.3);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+/* ── Utilities ────────────────────────────────────────────────────────── */
+.hidden { display: none !important; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* ── Light theme ──────────────────────────────────────────────────────── */
+body.light {
+  --bg:      #f1f5f9;
+  --surface: rgba(0,0,0,0.03);
+  --border:  rgba(0,0,0,0.09);
+  --text:    #0f172a;
+  --text2:   #475569;
+}
+body.light #main-screen {
+  background:
+    radial-gradient(ellipse at 15% 50%, rgba(59,130,246,0.08) 0%, transparent 60%),
+    #f1f5f9;
+}
+body.light .logo-text {
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  -webkit-background-clip: text; background-clip: text;
+}
+
+/* ── Display rotations ────────────────────────────────────────────────── */
+body.rotate-90  { transform: rotate(90deg);  width:100vh; height:100vw; transform-origin:50% 50%; position:fixed; top:calc((100vh - 100vw)/2); left:calc((100vw - 100vh)/2); }
+body.rotate-180 { transform: rotate(180deg); }
+body.rotate-270 { transform: rotate(270deg); width:100vh; height:100vw; transform-origin:50% 50%; position:fixed; top:calc((100vh - 100vw)/2); left:calc((100vw - 100vh)/2); }
