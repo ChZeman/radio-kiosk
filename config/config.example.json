@@ -17,16 +17,24 @@
     "poll_interval_seconds": 10,
     "request_headers": {},
     "field_artist": "artist",
-    "field_title": "title",
-    "field_is_commercial": "is_commercial",
-    "field_type": "type",
-    "commercial_type_value": "commercial",
-    "commercial_title_regex": "^(BREAK|COMMERCIAL|SPOT|PSA|PROMO)",
-    "field_sponsor_image_url": "sponsor_image_url",
-    "field_sponsor_name": "sponsor_name",
-    "field_sponsor_screen_url": "sponsor_screen_url",
-    "commercial_screen_url": ""
+    "field_title": "title"
   },
+
+  "slides": [
+    {
+      "artist": "BREAK",
+      "url": "https://yourstation.com/slides/sponsor.jpg"
+    },
+    {
+      "artist": "BREAK",
+      "title": "Underwriting",
+      "url": "https://yourstation.com/slides/underwriting.html"
+    },
+    {
+      "artist_regex": "^(PROMO|PSA|SPOT)",
+      "url": "https://yourstation.com/slides/promo.jpg"
+    }
+  ],
 
   "display": {
     "rotation": 0,
