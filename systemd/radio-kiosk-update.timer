@@ -1,0 +1,10 @@
+[Unit]
+Description=Radio Kiosk Auto-Update Timer
+
+[Timer]
+OnBootSec=10min
+OnUnitActiveSec=UPDATE_HOURSh
+RandomizedDelaySec=5min
+
+[Install]
+WantedBy=timers.target
